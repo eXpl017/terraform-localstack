@@ -1,0 +1,6 @@
+*.swp
+*.hcl
+
+terraform.tfstate.backup
+
+.terraform/
