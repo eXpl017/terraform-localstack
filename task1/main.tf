@@ -36,7 +36,7 @@ resource "aws_internet_gateway" "gw" {
   }
 }
 
-resource "aws_route_table" "second_rt" {
+resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.main.id
 
   route {
@@ -52,5 +52,48 @@ resource "aws_route_table" "second_rt" {
 resource "aws_route_table_association" "public_subnet_asso" {
   count          = length(var.public_subnet_cidrs)
   subnet_id      = element(aws_subnet.public_subnets[*].id, count.index)
-  route_table_id = aws_route_table.second_rt.id
+  route_table_id = aws_route_table.public_rt.id
+}
+
+resource "aws_eip" "nat" {
+  count  = length(var.public_subnet_cidrs)
+  domain = "vpc"
+
+  tags = {
+    Name = "Elastic IP for NAT Gateway ${count.index + 1}"
+  }
+
+  depends_on = [aws_internet_gateway.gw]
+}
+
+resource "aws_nat_gateway" "nat_gw" {
+  count         = length(var.public_subnet_cidrs)
+  allocation_id = element(aws_eip.nat[*].id, count.index)
+  subnet_id     = element(aws_subnet.public_subnets[*].id, count.index)
+
+  tags = {
+    Name = "NAT Gateway for Public Subnet ${count.index + 1}"
+  }
+
+  depends_on = [aws_internet_gateway.gw]
+}
+
+resource "aws_route_table" "private_rt" {
+    count = length(aws_subnet.private_subnets)
+    vpc_id = aws_vpc.main.id
+
+    route {
+        cidr_block = "0.0.0.0/0"
+        gateway_id = element(aws_nat_gateway.nat_gw[*].id, count.index)
+    }
+
+    tags = {
+        Name = "Route Table for Private Subnet ${count.index + 1}"
+    }
+}
+
+resource "aws_route_table_association" "private_subnet_asso" {
+    count = length(aws_subnet.private_subnets)
+    subnet_id = element(aws_subnet.private_subnets[*].id, count.index)
+    route_table_id = element(aws_route_table.private_rt[*].id, count.index)
 }
