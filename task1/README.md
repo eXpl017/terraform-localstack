@@ -29,4 +29,6 @@ aws_secret_access_key = test
 - can run aws cli and terraform commands now
 ***
 
+## Architecture Diagram
 
+![VPC Arch](image/task1.png)
