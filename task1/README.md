@@ -31,4 +31,4 @@ aws_secret_access_key = test
 
 ## Architecture Diagram
 
-![VPC Arch](image/task1.png)
+![VPC Arch](images/task1.png)
