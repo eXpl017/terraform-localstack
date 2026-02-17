@@ -1,30 +1,30 @@
 variable "vpc_cidr_block" {
-    type = string
-    description = "CIDR range for our VPC"
-    default = "10.0.0.0/16"
+  type        = string
+  description = "CIDR range for our VPC"
+  default     = "10.0.0.0/16"
 }
 
 variable "aws_region" {
-    type = string
-    description = "AWS region for VPC and resources"
-    default = "us-east-1"
+  type        = string
+  description = "AWS region for VPC and resources"
+  default     = "us-east-1"
 }
 
 variable "proj_name" {
-    type = string
-    description = "Name of project for tagging"
-    default = "practice-proj"
+  type        = string
+  description = "Name of project for tagging"
+  default     = "practice-proj"
 }
 
 variable "environ" {
-    type = string
-    description = "SDLC environment the project changes deploy to"
-    default = "dev"
+  type        = string
+  description = "SDLC environment the project changes deploy to"
+  default     = "dev"
 
-    validation {
-        condition = contains(["dev","staging","prod"], var.environ)
-        error_message = "Environment must be either dev, staging or prod"
-    }
+  validation {
+    condition     = contains(["dev", "staging", "prod"], var.environ)
+    error_message = "Environment must be either dev, staging or prod"
+  }
 }
 
 variable "public_subnet_cidrs" {
