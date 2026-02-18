@@ -1,0 +1,6 @@
+*.swp
+*.hcl
+*.backup
+
+.terraform.d/
+.terraform/
