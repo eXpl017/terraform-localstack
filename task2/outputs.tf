@@ -1,9 +1,9 @@
 output "bastion_pub_ip" {
-  value = aws_instance.bastion_host.public_ip
+  value = { for key, host in aws_instance.bastion_host : host.availability_zone => host.public_ip }
 }
 
 output "app_serv_priv_ip" {
-  value = aws_instance.app_server.private_ip
+  value = { for key, host in aws_instance.app_server : host.availability_zone => host.private_ip }
 }
 
 output "sg_ids" {

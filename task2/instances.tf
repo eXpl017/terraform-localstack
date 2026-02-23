@@ -4,9 +4,10 @@ resource "aws_key_pair" "deployer" {
 }
 
 resource "aws_instance" "bastion_host" {
+  for_each                    = toset(local.subnet_ids["public"])
   ami                         = local.ami_id
   instance_type               = var.serv_type["bastion"]
-  subnet_id                   = local.subnet_ids["public"]
+  subnet_id                   = each.value
   key_name                    = aws_key_pair.deployer.key_name
   vpc_security_group_ids      = [aws_security_group.bastion_sg.id]
   associate_public_ip_address = true
@@ -16,9 +17,10 @@ resource "aws_instance" "bastion_host" {
 }
 
 resource "aws_instance" "app_server" {
+  for_each               = toset(local.subnet_ids["private"])
   ami                    = local.ami_id
   instance_type          = var.serv_type["app"]
-  subnet_id              = local.subnet_ids["private"]
+  subnet_id              = each.value
   key_name               = aws_key_pair.deployer.key_name
   vpc_security_group_ids = [aws_security_group.app_serv_sg.id]
   tags = {
