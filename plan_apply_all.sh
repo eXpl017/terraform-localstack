@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-expected_dir="/home/witguy10/terraform-prac"
+expected_dir="${HOME}/terraform-prac"
 
 if [[ "$PWD" != "${expected_dir}" ]]; then
     printf "Please run script from %s\n" "${expected_dir}"
