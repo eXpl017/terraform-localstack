@@ -1,5 +1,6 @@
 resource "aws_lb" "myalb" {
   name               = "myalb"
+  internal           = "false"
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
   subnets            = local.subnet_ids["public"]

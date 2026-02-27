@@ -1,3 +1,3 @@
-output "test" {
-  value = local.subnet_ids
+output "alb_dns_name" {
+  value = aws_lb.myalb.dns_name
 }
