@@ -12,3 +12,7 @@ output "sg_ids" {
     app_serv_sg = aws_security_group.app_serv_sg.id
   }
 }
+
+output "app_serv_instance_id" {
+    value = [ for host in aws_instance.app_server : host.id ]
+}
