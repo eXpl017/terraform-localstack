@@ -38,7 +38,7 @@ function tf_apply {
         case ${confirm:0:1} in
             y|Y|"")
                 printf "Applying config\n"
-                terraform -chdir="$1" apply "plan/$1_plan"
+                terraform -chdir="$1" apply "${expected_dir}/plan/$1_plan"
                 ;;
             n|N) printf "Aborting, did not apply config for %s\n" "$1" ;;
             *)
