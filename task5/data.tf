@@ -1,0 +1,61 @@
+data "terraform_remote_state" "vpc" {
+  backend = "s3"
+
+  config = {
+    bucket                      = "terraform-remote-state"
+    key                         = "task1/terraform.tfstate"
+    region                      = "us-east-1"
+    profile                     = "localstack"
+    skip_credentials_validation = true
+    skip_metadata_api_check     = true
+    skip_region_validation      = true
+    endpoints = {
+      s3 = "http://s3.localhost.localstack.cloud:4566"
+    }
+  }
+}
+
+
+data "terraform_remote_state" "alb" {
+  backend = "s3"
+
+  config = {
+    bucket                      = "terraform-remote-state"
+    key                         = "task4/terraform.tfstate"
+    region                      = "us-east-1"
+    profile                     = "localstack"
+    skip_credentials_validation = true
+    skip_metadata_api_check     = true
+    skip_region_validation      = true
+    endpoints = {
+      s3 = "http://s3.localhost.localstack.cloud:4566"
+    }
+  }
+}
+
+
+data "terraform_remote_state" "iam_prof" {
+  backend = "s3"
+
+  config = {
+    bucket                      = "terraform-remote-state"
+    key                         = "task3/terraform.tfstate"
+    region                      = "us-east-1"
+    profile                     = "localstack"
+    skip_credentials_validation = true
+    skip_metadata_api_check     = true
+    skip_region_validation      = true
+    endpoints = {
+      s3 = "http://s3.localhost.localstack.cloud:4566"
+    }
+  }
+}
+
+data "aws_ami" "amazon_linux" {
+  owners      = ["amazon"]
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  }
+}
