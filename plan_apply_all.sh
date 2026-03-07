@@ -28,11 +28,11 @@ function tf_plan {
 
 function tf_apply {
     if [[ $AUTO_APPROVE -eq 1 ]]; then
-        printf "Auto-approve specified\nInitializing and applying terraform config for %s" "$1"
+        printf "\nAuto-approve specified\n[+] Initializing and applying terraform config for %s" "$1"
         terraform -chdir="$1" init
         terraform -chdir="$1" apply -auto-approve
     else
-        printf "Creating plan for %s\n" "$1"
+        printf "\nCreating plan for %s\n" "$1"
         tf_plan "$1"
         read -rp "Apply config for $1? (Y/n) " confirm
         case ${confirm:0:1} in
@@ -47,7 +47,7 @@ function tf_apply {
                 ;;
         esac
     fi
-    printf "=%.0s" {1..20}
+    printf "=%.0s" {1..40}
 }
 
 
