@@ -16,7 +16,7 @@ terraform {
     skip_metadata_api_check     = true
     skip_region_validation      = true
     endpoints = {
-        s3 = "http://s3.localhost.localstack.cloud:4566"
+      s3 = "http://s3.localhost.localstack.cloud:4566"
     }
-    }
+  }
 }

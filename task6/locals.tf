@@ -1,3 +1,3 @@
 locals {
-    internet_cidr = "0.0.0.0/0"
+  internet_cidr = "0.0.0.0/0"
 }
